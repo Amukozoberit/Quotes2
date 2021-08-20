@@ -11,7 +11,7 @@ class ProductionConfig(Config):
     pass
 
 
-config={
+config_options={
     'development':DevelopmentConfig,
     'production':ProductionConfig,
     'default':DevelopmentConfig,

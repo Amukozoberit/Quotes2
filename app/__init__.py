@@ -1,13 +1,13 @@
 from flask import Flask
-from config import config
+from config import config_options
 from flask_bootstrap import Bootstrap
 
 bootstrap=Bootstrap()
 
 def create_app(config_name):
     app=Flask(__name__)
-    app.config.from_object(config[config_name])
-    config[config_name].init(app)
+    app.config.from_object(config_options[config_name])
+    
     bootstrap.init_app(app)
 
 
@@ -16,10 +16,10 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
 
 
-    from . auth import main as auth_blueprint
+    from . auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint,url_prefix='/auth')
 
 
-    from .request import configure_request
-    configure_request(app)
+    # from .request import configure_request
+    # configure_request(app)
     return app
