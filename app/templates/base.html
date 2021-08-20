@@ -1,0 +1,25 @@
+{%extends 'bootstrap/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% block styles %} {{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"> {% endblock %} {%block navbar%} {% include 'navbar.html' %}{%endblock%} {%block content%}
+    <div class="d-flex flex-column bd-highlight mb-3">
+        <div class="p-2 bd-highlight">Flex item 1</div>
+        <div class="p-2 bd-highlight">Flex item 2</div>
+        <div class="p-2 bd-highlight">Flex item 3</div>
+    </div> {%endblock%}
+</body>
+<style>
+
+</style>
+
+</html>
