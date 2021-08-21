@@ -1,0 +1,15 @@
+{%extends 'base.html'%}{%block content%}
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+
+    {{form.hidden_tag()}}
+    <form action="" method="POST" style="color:white">
+
+        <h1 class="h3 mb-3 font-weight-normal text-center">Please create Account</h1>
+        {{form.name.label()}}{{form.name(class="form-control ",placeholder="User name ")}}
+        <br>{{form.email.label()}}{{form.email(class="form-control ",placeholder="Email Address ")}} <br>{{form.password.label()}}{{form.password(class="form-control ",placeholder="Password ")}}
+        <br> {{form.confirm_password.label()}}{{form.confirm_password(class="form-control " ,placeholder="Confirm Password " )}} <br>{{form.submit(class="btn btn-lg btn-block btn-primary")}} </form>
+</div>
+<div class="col-md-2"></div>
+{%endblock%}

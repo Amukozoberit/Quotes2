@@ -4,7 +4,8 @@ import os
 
 
 class Config:
-  pass
+  SECRET_KEY='rE\x1eKQ\xa0\x80\xee\xa2\xfcf{\xb9Ki&'
+  SQLALCHEMY_DATABASE_URI=''
 class DevelopmentConfig(Config):
     DEBUG=True
 class ProductionConfig(Config):

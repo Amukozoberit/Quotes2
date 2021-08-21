@@ -1,5 +1,5 @@
 
-
+from flask import render_template
 from . import main
 
 
@@ -8,4 +8,9 @@ from . import main
 
 @main.route('/')
 def index():
-    return '<h1>Hello world</h1>'
+    return render_template('authtemplates/index.html')
+
+
+@main.route('/')
+def profile():
+    return render_template('authtemplates/profile.html')
