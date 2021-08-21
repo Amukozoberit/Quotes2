@@ -1,13 +1,12 @@
 {% extends 'base.html'%}{%block content%}
-<div class="col-md-4"></div>
-<div class="col-md-4">
-    <h1 id="demo" class="demo text-center"></h1>
-    <p id="text" style="display:none ">{{hello.quote}}
 
-        <h6 class='float-right'>author:{{hello.author}}</h6>
-    </p>
-</div>
-<div class="col-md-4"></div>
+<h1 id="demo" class="demo text-center"></h1>
+<p id="text" style="display:none ">{{hello.quote}}
+
+    <h6 class='float-right'>author:{{hello.author}}</h6>
+</p>
+
+
 <script type="text/javascript ">
     var text = document.getElementById('text').innerHTML;
     var i = 0

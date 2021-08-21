@@ -31,6 +31,10 @@ def create_app(config_name):
     db.init_app(app)
     login_manager.init_app(app)
   
+
+
+    from .request import configure_request
+    configure_request(app)
    
     # from .request import configure_request
     # configure_request(app)
