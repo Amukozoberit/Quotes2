@@ -10,6 +10,7 @@ def load_user(user_id):
 
 
 class Users(UserMixin,db.Model):
+    __tablename__='users'
     id=db.Column(db.Integer,primary_key=True)
     email=db.Column(db.String(100),unique=True)
     password=db.Column(db.String(100))
@@ -32,7 +33,7 @@ class Users(UserMixin,db.Model):
         return check_password_hash(self.password_hash,password)
 
     def __repr__(self):
-        return f'User {self.name}'
+        return f'Users {self.name}'
 
 
 
