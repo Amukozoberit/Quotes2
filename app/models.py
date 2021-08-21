@@ -13,7 +13,7 @@ class Users(UserMixin,db.Model):
     __tablename__='users'
     id=db.Column(db.Integer,primary_key=True)
     email=db.Column(db.String(100),unique=True)
-    password=db.Column(db.String(100))
+    password_secure=db.Column(db.String(100))
     name=db.Column(db.String(1000))
     roles_id=db.Column(db.Integer,db.ForeignKey('roles.id'))
 
@@ -25,12 +25,12 @@ class Users(UserMixin,db.Model):
     @password.setter
     def password(self,password):
         '''after pass set calls generatepass that writes the hashed pasword to password_hash field pass cant be recovered once hashed'''
-        self.password_hash=generate_password_hash(password)
+        self.password_secure=generate_password_hash(password)
 
 
     def verify_password(self,password):
         '''checks if password hashed === with password'''
-        return check_password_hash(self.password_hash,password)
+        return check_password_hash(self.password_secure,password)
 
     def __repr__(self):
         return f'Users {self.name}'
@@ -42,3 +42,6 @@ class Roles(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     name=db.Column(db.String(64))
     users=db.relationship('Users',backref="user_role",lazy="dynamic")  
+# class quote():
+#    def __init__(self,author,id,quote,permalink)
+#    self.author=author

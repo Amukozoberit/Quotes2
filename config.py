@@ -5,7 +5,7 @@ import os
 
 class Config:
   SECRET_KEY='rE\x1eKQ\xa0\x80\xee\xa2\xfcf{\xb9Ki&'
-  SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://mwashe:github2122@localhost/quotes'
+  SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://mwashe:github2122@localhost/quotesa'
 class DevelopmentConfig(Config):
     DEBUG=True
 class ProductionConfig(Config):

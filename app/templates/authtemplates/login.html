@@ -1,13 +1,10 @@
- {%extends 'base.html'%}{%block content%}
+ {%extends 'base.html'%}{% import 'bootstrap/wtf.html' as wtf%}{%block content%}
 <div class="col-md-2"></div>
 <div class="col-md-8">
 
-    {{form.hidden_tag()}}
-    <form action="" method="POST" style="color:white">
 
-        <h1 class="h3 mb-3 font-weight-normal text-center">Login</h1>
-        {{form.email.label()}}{{form.email(class="form-control ",placeholder="Email Address ")}} {{form.password.label()}}{{form.password(class="form-control ",placeholder="Password ")}}
-        <br>{{form.submit(class="btn btn-lg btn-block btn-primary")}} </form>
+    {{wtf.quick_form(form)}}
+
 </div>
 <div class="col-md-2"></div>
 {%endblock%}
