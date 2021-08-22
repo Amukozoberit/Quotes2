@@ -1,10 +1,12 @@
 
+from app.decorators import admin_required
 from app.request import get_quotes
 from flask import render_template
 from . import main
+from decorators import  admin_required,permission_required
+from flask_login import login_required
 
-
-
+from models import Permission
 
 
 
@@ -21,3 +23,16 @@ def index():
 @main.route('/')
 def profile():
     return render_template('authtemplates/profile.html')
+
+
+@main.route('/admin')
+@login_required
+@admin_required
+def from_admins_only():
+   return 'for Admins only'
+
+@main.route('/moderator')
+@login_required
+@permission_required(Permission.MODERATE_COMMENTS)
+def for_moderators_only():
+   return 'For comment moderation'
