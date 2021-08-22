@@ -1,4 +1,8 @@
 from flask_login import UserMixin
+from flask_login.mixins import AnonymousUserMixin
+from flask_principal import Permission
+from flask import current_app
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import backref
 from . import db
 from . import login_manager
@@ -8,15 +12,15 @@ from werkzeug.security import generate_password_hash,check_password_hash
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
-
 class Users(UserMixin,db.Model):
     __tablename__='users'
     id=db.Column(db.Integer,primary_key=True)
     email=db.Column(db.String(100),unique=True)
     password_secure=db.Column(db.String(100))
     name=db.Column(db.String(1000))
-    roles_id=db.Column(db.Integer,db.ForeignKey('roles.id'))
-
+    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
+  
+   
     @property
     def password(self):
         '''password ensures password is write only not read'''
@@ -32,6 +36,21 @@ class Users(UserMixin,db.Model):
         '''checks if password hashed === with password'''
         return check_password_hash(self.password_secure,password)
 
+    def __init__(self,**kwargs):
+            super(Users,self).__init__(**kwargs)
+            if self.role is None:
+                if self.email==current_app.config['FLASKY_ADMIN']:
+                    self.role=Roles.query.filter_by(permission=16).first()
+                if self.role is None:
+                    self.role=Roles.query.filter_by(default=True).first()
+
+
+
+   
+    def can(self,permissions):
+            return self.role is not None and  (self.role.permissions & permissions)==permissions
+    def is_administrator(self):
+            return self.can(Permission.ADMINISTER)
     def __repr__(self):
         return f'Users {self.name}'
 
@@ -41,7 +60,46 @@ class Roles(db.Model):
     __tablename__='roles'    
     id=db.Column(db.Integer,primary_key=True)
     name=db.Column(db.String(64))
-    users=db.relationship('Users',backref="user_role",lazy="dynamic")  
-# class quote():
-#    def __init__(self,author,id,quote,permalink)
-#    self.author=author
+    default=db.Column(db.Boolean,default=False,index=True)
+    permissions=db.Column(db.Integer)
+    users=db.relationship('Users',backref='role',lazy='dynamic')
+
+
+    @staticmethod
+    def insert_roles():
+        roles = {
+        'User': (Permission.FOLLOW |
+        Permission.COMMENT ,
+         True),
+        'Moderator': (Permission.FOLLOW |
+        Permission.COMMENT |
+        Permission.WRITE_ARTICLES |
+        Permission.MODERATE_COMMENTS, False),
+        'Administrator': (0xff, False)
+        }
+        for r in roles:
+            role = Roles.query.filter_by(name=r).first()
+            if role is None:
+                role = Roles(name=r)
+            role.permissions = roles[r][0]
+            role.default = roles[r][1]
+            db.session.add(role)
+            db.session.commit()
+
+
+
+     
+       
+class AnonymousUser(AnonymousUserMixin):
+    def can(self,permissions):
+        return False
+
+    def is_administrator(self):
+        return False
+login_manager.anonymous_user = AnonymousUser
+class Permission:
+    FOLLOW=1
+    COMMENT=2
+    WRITE_ARTICLES = 4
+    MODERATE_COMMENTS=8
+    ADMINISTER=16
