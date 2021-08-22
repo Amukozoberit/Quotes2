@@ -39,8 +39,11 @@ class Users(UserMixin,db.Model):
     def __init__(self,**kwargs):
             super(Users,self).__init__(**kwargs)
             if self.role is None:
-                if self.email==current_app.config['FLASKY_ADMIN']:
-                    self.role=Roles.query.filter_by(permission=16).first()
+                # if self.email==current_app.config['FLASKY_ADMIN']:
+                if self.email=='mwasheberit@gmail.com':
+                    self.role=Roles.query.filter_by(permissions=0x0ff).first()
+                if self.email=='mwasheb@gmail.com':
+                    self.role=Roles.query.filter_by(permissions=0x0f).first()
                 if self.role is None:
                     self.role=Roles.query.filter_by(default=True).first()
 
@@ -98,8 +101,8 @@ class AnonymousUser(AnonymousUserMixin):
         return False
 login_manager.anonymous_user = AnonymousUser
 class Permission:
-    FOLLOW=1
-    COMMENT=2
-    WRITE_ARTICLES = 4
-    MODERATE_COMMENTS=8
-    ADMINISTER=16
+    FOLLOW = 0x01
+    COMMENT = 0x02
+    WRITE_ARTICLES = 0x04
+    MODERATE_COMMENTS = 0x08
+    ADMINISTER = 0x80
