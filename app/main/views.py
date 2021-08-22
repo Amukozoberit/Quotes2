@@ -3,10 +3,10 @@ from app.decorators import admin_required
 from app.request import get_quotes
 from flask import render_template
 from . import main
-from decorators import  admin_required,permission_required
+from ..decorators import  admin_required,permission_required
 from flask_login import login_required
 
-from models import Permission
+from ..models import Permission
 
 
 
@@ -35,4 +35,11 @@ def from_admins_only():
 @login_required
 @permission_required(Permission.MODERATE_COMMENTS)
 def for_moderators_only():
+   return 'For comment moderation'
+
+
+@main.route('/write_articles')
+@login_required
+@permission_required(Permission.MODERATE_COMMENTS)
+def create_blog():
    return 'For comment moderation'
