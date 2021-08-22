@@ -33,6 +33,8 @@ def create_app(config_name):
     from . posts import posts as posts_blueprint
     app.register_blueprint(posts_blueprint,url_prefix='/blogposts')
 
+    from . moderator import moderator as moderator_blueprint
+    app.register_blueprint(moderator_blueprint,url_prefix='/blogposts')
 
     db.init_app(app)
     login_manager.init_app(app)
