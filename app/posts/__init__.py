@@ -1,5 +1,5 @@
 from flask import Blueprint
-main=Blueprint('main',__name__)
+posts=Blueprint('posts',__name__)
 
 
 
