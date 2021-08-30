@@ -1,0 +1,32 @@
+{%extends 'base.html'%}{%block content%}
+<div class="container">
+    {%if not comments|length
+    <1%}{%for comment in comments%}<table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <!-- Your Columns HERE -->
+                <th scope="col">COMMENT</th>
+                <th scope="col">ARTICLE</th>
+                <th scope="col">ID</th>
+                <th scope="col">DELETE</th>
+                <th scope="col">APPROVE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Your rows inside the table HERE: -->
+
+            <tr>
+                <td>{{comment.comments}}</td>
+                <td>{{comment.article_id}}</td>
+                <td>{{comment.id}}</td>
+                <td><button class='btn btn-outline btn-info'><a href="{{url_for('main.del_comment',id=comment.id)}}">DELETE</a></button></td>
+                <td><button class="btn btn-outline btn-success"><a href="{{url_for('main.apprv_comment',id=comment.id)}}">APPROVE</a></button></td>
+
+            </tr>
+
+        </tbody>
+        </table>
+
+        {%endfor%}{%else%}
+        <h1>No comment yet</h1>{%endif%}{%endblock%}
+</div>

@@ -1,12 +1,21 @@
-{% extends 'base.html'%}{%block content%}
+{% import 'macros.html' as macro%}{% import 'bootstrap/wtf.html' as wtf%}{% extends 'base.html'%}{%block content%}
+<div class="jumbotron" style="margin:15px; opacity:0.4; color:green;background-color: blanchedalmond;">
+    <h1 id="demo" class="demo text-center">
+    </h1>
+    <p id="text" style="display:none ">{{hello.quote}}
 
-<h1 id="demo" class="demo text-center"></h1>
-<p id="text" style="display:none ">{{hello.quote}}
+        <h6 class='float-right'>author:{{hello.author}}</h6>
+    </p>
+</div>
+<h1>Latest News</h1>
+{{ macro.displayMovieList(blogposts)}}
+<h1>Coding</h1>
+{{ macro.displayMovieList(blogposts)}}
 
-    <h6 class='float-right'>author:{{hello.author}}</h6>
-</p>
-
-
+<h1>Travel</h1>
+{{ macro.displayMovieList(blogposts)}}
+<h1>Relationship</h1>
+{{ macro.displayMovieList(blogposts)}} {{wtf.quick_form(mailform)}}
 <script type="text/javascript ">
     var text = document.getElementById('text').innerHTML;
     var i = 0
@@ -21,4 +30,10 @@
         console.log('a')
     }
     typing()
-</script>{%endblock%}
+</script>{%endblock%} {% block footer %}
+<div class="container">
+    <div id="footer">
+        <p>&copy 2020 Your footer stuff goes here</p>
+    </div>
+</div>
+{%- endblock %}

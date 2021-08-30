@@ -1,0 +1,11 @@
+{% extends 'base.html'%}{% import 'bootstrap/wtf.html' as wtf%} {% import 'macros.html' as macro%}{%block content%}
+<h1>Add comments</h1>
+<div class="container">
+    <div class="col-md-4">
+        {{wtf.quick_form(form)}}
+    </div>
+
+</div>{%if not post.comments.count()
+<1%}{%for comment in post.comments%} <h6>{{comment.comments}}</h6>
+    {%endfor%}{%else%}
+    <h1>No comment yet</h1>{%endif%}{%endblock%}

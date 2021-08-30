@@ -1,0 +1,14 @@
+
+{{subject}}
+A new post has been added by
+
+
+
+{{post.title}}
+{{post.article_body}}
+
+
+Go to app to see more
+
+Regards 
+Mwashe Berit 
