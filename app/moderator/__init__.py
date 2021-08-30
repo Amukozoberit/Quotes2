@@ -1,5 +1,5 @@
 from flask import Blueprint
-moderate=Blueprint('moderate',__name__)
+moderator=Blueprint('moderator',__name__)
 
 
 
