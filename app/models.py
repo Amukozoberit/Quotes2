@@ -4,6 +4,7 @@ from flask_principal import Permission
 from flask import current_app
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import backref
+from datetime import datetime
 from . import db
 from . import login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -19,8 +20,8 @@ class Users(UserMixin,db.Model):
     password_secure=db.Column(db.String(100))
     name=db.Column(db.String(1000))
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
-  
-   
+    articles=db.relationship('Article',backref='author',lazy='dynamic')
+    comments=db.relationship('Comment',backref='commentor',lazy='dynamic')
     @property
     def password(self):
         '''password ensures password is write only not read'''
@@ -106,3 +107,39 @@ class Permission:
     WRITE_ARTICLES = 0x04
     MODERATE_COMMENTS = 0x08
     ADMINISTER = 0x80
+
+
+class Article(db.Model):
+    __tablename__='articles'
+    id=db.Column(db.Integer,primary_key=True)
+    article_body=db.Column(db.Text())
+    user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
+    comments=db.relationship('Comment',backref='article',lazy='dynamic')
+    title=db.Column(db.String(200))
+    time=db.Column(db.DateTime,default=datetime.utcnow)
+    video=db.Column(db.Text())
+
+
+    # def __repr__(self):
+    #     return '<Article>' %self.article_body
+class Comment(db.Model):
+    __tablename__='comments'
+    id=db.Column(db.Integer,primary_key=True)
+    comments=db.Column(db.String(64))
+    time=db.Column(db.DateTime,default=datetime.utcnow)
+    author_id=db.Column(db.Integer,db.ForeignKey('users.id'))
+    article_id=db.Column(db.Integer,db.ForeignKey('articles.id'))
+
+
+class Subscriber(db.Model):
+    __tablename__='subscribers'
+
+    id=db.Column(db.Integer,primary_key=True)
+    email = db.Column(db.String(255),unique=True,index=True)
+
+    def save_subscriber(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'Subscriber {self.email}'
