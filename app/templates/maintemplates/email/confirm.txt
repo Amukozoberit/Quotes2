@@ -1,0 +1,5 @@
+ Dear {{current_user.username}}
+ Wecome to PitchApp.We value the existence of our customers thats why we confirmed that this is a valid mail
+ 
+    Sincerely,
+    Mwashe Berit
